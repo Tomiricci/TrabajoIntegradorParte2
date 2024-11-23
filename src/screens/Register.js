@@ -11,41 +11,75 @@ export default class Register extends Component {
     irAlLogin(){
         this.props.navigation.navigate('login')
     }
-componentDidMount() {
-  auth.onAuthStateChanged((user) => {
-    if (user !== null) {
-        console.log("Este es el email logueado ", auth.currentUser.email)
-        this.props.navigation.navigate('anidada')
 
+    componentDidMount() {
+        auth.onAuthStateChanged((user) => {
+            if (user !== null) {
+                console.log("Este es el email logueado ", auth.currentUser.email)
+                this.props.navigation.navigate('anidada')
+            }
+        })
     }
-    })
-}
-  render() {
-    return (
-      <View>
-        <Text style={styles.title}>Estamos en el register</Text>
-        <FormularioRegister navigation={this.props.navigation} />
-        <TouchableOpacity
-        onPress={()=> this.irAlLogin()}
-        >
-            <Text style={styles.registerButton}>Ya tengo cuenta, necesito iniciar sesion</Text>
-        </TouchableOpacity>
 
-        
-      </View>
-    )
-  }
+    render() {
+        return (
+            <View style={styles.container}>
+                <Text style={styles.title}>Registrarse</Text>
+                <FormularioRegister navigation={this.props.navigation} />
+
+                <TouchableOpacity
+                    onPress={() => this.irAlLogin()}
+                    style={styles.loginLink}
+                >
+                    <Text style={styles.loginLinkText}>Ya tengo cuenta, iniciar sesión</Text>
+                </TouchableOpacity>
+            </View>
+        )
+    }
 }
+
 const styles = StyleSheet.create({
-  title: {
-    fontSize: 24,
-    marginBottom: 20,
-  },
-  registerButton: {
-    width: '100%',
-    alignItems: 'center',
-    marginTop: 10,
-    textAlign: 'center',
-    
-}
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#f2f2f2', // Fondo claro
+        padding: 20,
+    },
+    title: {
+        fontSize: 30,
+        fontWeight: 'bold',
+        color: '#333',
+        marginBottom: 40,
+        textAlign: 'center',
+    },
+    input: {
+        width: '100%',
+        height: 50,
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderRadius: 10,
+        marginBottom: 20,
+        paddingLeft: 15,
+        backgroundColor: '#fff',
+        fontSize: 16,
+        color: '#333',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+    },
+    loginLink: {
+        marginTop: 20,
+        paddingVertical: 12,
+        width: '100%',
+        backgroundColor: '#007BFF', // Botón azul
+        borderRadius: 10,
+        alignItems: 'center',
+    },
+    loginLinkText: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: 'bold',
+    }
 });

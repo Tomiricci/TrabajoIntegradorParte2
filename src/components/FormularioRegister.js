@@ -31,7 +31,7 @@ export default class FormularioRegister extends Component {
         }
 
         if(password.length < 5){
-            this.setState({error: 'Ingrese una password mas larga'})
+            this.setState({error: 'Ingrese una password más larga'})
             return
         }
 
@@ -44,23 +44,18 @@ export default class FormularioRegister extends Component {
                     bio: bio,
                     username: username,
                     imagenPerfil: '',
-                   
                 })
                 .then(
                     () => this.props.navigation.navigate('anidada')
                 )
-
-                
             }
         })
         .catch(err => {
             if (err.code === "auth/email-already-in-use"){
-                this.setState({error: 'el email ya esta en uso'})
+                this.setState({error: 'El email ya está en uso'})
             }
         })
-
     }
-
 
     render() {
         return (
@@ -97,14 +92,15 @@ export default class FormularioRegister extends Component {
             {
                 this.state.error !== '' 
                 &&
-                <Text>
+                <Text style={styles.errorText}>
                     {this.state.error}
                 </Text>
             }
             <TouchableOpacity
-                onPress={()=> this.submit(this.state.email, this.state.username, this.state.bio, this.state.password)}
+                onPress={() => this.submit(this.state.email, this.state.username, this.state.bio, this.state.password)}
+                style={styles.registerButton}
             >
-                <Text style={styles.registerButton}>Registrarse</Text>
+                <Text style={styles.registerButtonText}>Registrarse</Text>
             </TouchableOpacity>
         </View>
         )
@@ -114,21 +110,43 @@ export default class FormularioRegister extends Component {
 const styles = StyleSheet.create({
     container: {
         padding: 20,
+        backgroundColor: '#f9f9f9', // Fondo gris claro
+        flex: 1,
+        justifyContent: 'center',
     },
-   
     input: {
         width: '100%',
-        borderWidth: 1,
-        borderColor: 'gray',
-        marginBottom: 10,
-   
+        height: 50,
+        borderWidth: 2,
+        borderColor: '#007BFF', // Borde azul para resaltar
+        borderRadius: 20, // Bordes más redondeados
+        marginBottom: 15,
+        paddingLeft: 20, // Más espacio al texto
+        backgroundColor: '#fff',
+        fontSize: 16,
+        color: '#333',
+        shadowColor: '#007BFF', // Sombra con un toque azul
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        elevation: 5, // Sombra para Android
+    },
+    errorText: {
+        color: 'red',
+        textAlign: 'center',
+        marginTop: 10,
     },
     registerButton: {
+        marginTop: 20,
+        paddingVertical: 15,
         width: '100%',
+        backgroundColor: '#007BFF', // Botón azul
+        borderRadius: 25, // Bordes redondeados para el botón
         alignItems: 'center',
-        marginTop: 10,
-        textAlign: 'center',
-        fontSize: 20
+    },
+    registerButtonText: {
+        color: '#fff',
+        fontSize: 18,
+        fontWeight: 'bold',
     }
 });
-
