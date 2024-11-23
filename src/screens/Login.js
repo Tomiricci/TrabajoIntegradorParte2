@@ -14,6 +14,14 @@ export default class Login extends Component {
 
     componentDidMount() {
         console.log('props de la screen', this.props);
+        auth.onAuthStateChanged((user) => {
+            if (user !== null) {
+                console.log("Este es el email logueado ", auth.currentUser.email)
+                this.props.navigation.navigate('anidada')
+    
+            }
+    
+            })
     }
 
     irARegister() {
@@ -104,4 +112,5 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
 });
+
 
