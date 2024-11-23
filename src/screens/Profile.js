@@ -1,16 +1,30 @@
-import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, View, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
 import React, { Component } from 'react';
 import { db, auth } from '../firebase/config';
+import Post from '../components/Post';
 
 export default class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
       userInfo: [],
+      posteos:[]
     };
   }
 
   componentDidMount() {
+    db.collection('posteos').where('owner', '==', auth.currentUser.email).onSnapshot(
+      docs => {
+          let posts = [];
+          docs.forEach(doc => {
+              posts.push({
+                  id: doc.id,
+                  data: doc.data()
+              });
+          });
+          this.setState({ posteos: posts });
+      }
+  );
     db.collection('users')
       .where('owner', '==', auth.currentUser.email)
       .onSnapshot((docs) => {
@@ -50,8 +64,13 @@ export default class Profile extends Component {
             <>
               <Text style={styles.welcomeText}>Hola {this.state.userInfo[0].data.username}, bienvenido a tu perfil.</Text>
               <Text>Este es tu mail: {this.state.userInfo[0].data.owner}</Text>
-              <Text>Tu cantidad de productos es </Text>
-              <Text>Estos son tus productos</Text>
+              <Text>Tu cantidad de posteos es {this.state.posteos.length}  </Text>
+              <Text>Estos son tus posteos</Text>
+              <FlatList
+                data={this.state.posteos}
+                keyExtractor={(item) => item.id.toString()}
+                renderItem={({item}) => <View><Post navigation = {this.props.navigation} posteo={item}/></View>} 
+                />
             </>
           )}
         </View>

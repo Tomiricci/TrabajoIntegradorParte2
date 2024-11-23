@@ -1,4 +1,4 @@
-import { Text, View, TouchableOpacity, TouchableOpacityBase, StyleSheet } from 'react-native'
+import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
 import React, { Component } from 'react'
 import FormularioRegister from '../components/FormularioRegister'
 
@@ -10,7 +10,15 @@ export default class Register extends Component {
     irAlLogin(){
         this.props.navigation.navigate('login')
     }
+componentDidMount() {
+  auth.onAuthStateChanged((user) => {
+    if (user !== null) {
+        console.log("Este es el email logueado ", auth.currentUser.email)
+        this.props.navigation.navigate('anidada')
 
+    }
+    })
+}
   render() {
     return (
       <View>
@@ -40,4 +48,3 @@ const styles = StyleSheet.create({
     
 }
 });
-
