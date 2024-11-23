@@ -28,12 +28,12 @@ export default class NavegacionAnidada extends Component {
                     <Tab.Screen name='NuevoPost' component={NuevoPost}
                     options={{
                         headerShown: false,
-                        tabBarIcon: () => <FontAwesome name="user" size={24} color="black" />
+                        tabBarIcon: () => <FontAwesome name="plus" size={24} color="black" />
                     }} />
                     <Tab.Screen name='Buscador' component={Buscador}
                     options={{
                         headerShown: false,
-                        tabBarIcon: () => <FontAwesome name="user" size={24} color="black" />
+                        tabBarIcon: () => <FontAwesome name="search" size={24} color="black" />
                     }} />
 
 

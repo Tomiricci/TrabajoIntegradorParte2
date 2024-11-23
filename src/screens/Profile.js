@@ -59,27 +59,44 @@ export default class Profile extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View>
-          {this.state.userInfo.length > 0 && (
-            <>
-              <Text style={styles.welcomeText}>Hola {this.state.userInfo[0].data.username}, bienvenido a tu perfil.</Text>
-              <Text>Este es tu mail: {this.state.userInfo[0].data.owner}</Text>
-              <Text>Tu cantidad de posteos es {this.state.posteos.length}  </Text>
-              <Text>Estos son tus posteos</Text>
-              <FlatList
-                data={this.state.posteos}
-                keyExtractor={(item) => item.id.toString()}
-                renderItem={({item}) => <View><Post navigation = {this.props.navigation} posteo={item}/></View>} 
-                />
-            </>
-          )}
-        </View>
+  <View style={styles.profileCard}>
+    {this.state.userInfo.length > 0 && (
+      <>
+        <Text style={styles.welcomeText}>
+          Hola, {this.state.userInfo[0].data.username} 👋
+        </Text>
+        <Text style={styles.emailText}>
+          {this.state.userInfo[0].data.owner}
+        </Text>
+        <Text style={styles.postCountText}>
+          Posteos: {this.state.posteos.length}
+        </Text>
+      </>
+    )}
+  </View>
 
-        {/* Botón de Cerrar Sesión en la parte inferior */}
-        <TouchableOpacity style={styles.logoutButton} onPress={this.logout}>
-          <Text style={styles.logoutButtonText}>Cerrar sesión</Text>
-        </TouchableOpacity>
-      </View>
+  {this.state.posteos.length > 0 && (
+    <>
+      <Text style={styles.postListTitle}>Tus Posteos</Text>
+      <FlatList
+        data={this.state.posteos}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <View style={styles.postContainer}>
+            <Post navigation={this.props.navigation} posteo={item} />
+          </View>
+        )}
+      />
+    </>
+  )}
+
+  {/* Botón de Cerrar Sesión */}
+  <TouchableOpacity style={styles.logoutButton} onPress={this.logout}>
+    <Text style={styles.logoutButtonText}>Cerrar sesión</Text>
+  </TouchableOpacity>
+</View>
+
+
     );
   }
 }
@@ -87,23 +104,75 @@ export default class Profile extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#f7f8fa', // Fondo general suave
     padding: 20,
-    justifyContent: 'space-between', // Distribuye el contenido en la parte superior e inferior
     alignItems: 'center',
   },
+  profileCard: {
+    width: '100%',
+    backgroundColor: '#fff',
+    borderRadius: 15,
+    padding: 20,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 5,
+    marginBottom: 20,
+  },
   welcomeText: {
-    fontSize: 18,
+    fontSize: 22,
+    fontWeight: '600',
+    color: '#333',
+    marginBottom: 5,
+    textAlign: 'center',
+  },
+  emailText: {
+    fontSize: 16,
+    color: '#666',
     marginBottom: 10,
+  },
+  postCountText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#007AFF', // Azul moderno
+    marginBottom: 10,
+  },
+  postListTitle: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: '#333',
+    marginBottom: 10,
+    alignSelf: 'flex-start',
+  },
+  postContainer: {
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    padding: 15,
+    marginBottom: 15,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  postText: {
+    fontSize: 16,
+    color: '#444',
   },
   logoutButton: {
     backgroundColor: '#FF6B6B',
-    padding: 10,
-    borderRadius: 5,
-    width: '100%',
+    padding: 15,
+    borderRadius: 30,
+    width: '80%',
     alignItems: 'center',
+    position: 'absolute',
+    bottom: 20,
   },
   logoutButtonText: {
-    color: 'white',
-    fontWeight: 'bold',
+    color: '#fff',
+    fontWeight: '600',
+    fontSize: 16,
   },
 });

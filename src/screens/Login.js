@@ -18,10 +18,8 @@ export default class Login extends Component {
             if (user !== null) {
                 console.log("Este es el email logueado ", auth.currentUser.email)
                 this.props.navigation.navigate('anidada')
-    
             }
-    
-            })
+        })
     }
 
     irARegister() {
@@ -33,22 +31,22 @@ export default class Login extends Component {
             auth.signInWithEmailAndPassword(this.state.gmail, this.state.password)
                 .then((user) => {
                     console.log("Has iniciado sesión correctamente");
-                    this.setState({ errorMessage: "" }); 
+                    this.setState({ errorMessage: "" });
                     this.props.navigation.navigate('anidada', { screen: 'home' });
                 })
                 .catch(err => {
                     console.log("Error en tu mail o contraseña", err);
-                    this.setState({ errorMessage: "Error en tu mail o contraseña" }); 
+                    this.setState({ errorMessage: "Error en tu mail o contraseña" });
                 });
         } else {
-            this.setState({ errorMessage: "Por favor completa todos los campos" }); 
+            this.setState({ errorMessage: "Por favor completa todos los campos" });
         }
     }
 
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.title}>Estamos en el login</Text>
+                <Text style={styles.title}>Bienvenido</Text>
 
                 <TextInput
                     style={styles.input}
@@ -66,19 +64,17 @@ export default class Login extends Component {
                     value={this.state.password}
                 />
 
-                <TouchableOpacity  onPress={() => this.handleLogin()}>
-                    <Text style={styles.loginButton}>Iniciar sesión</Text>
+                <TouchableOpacity style={styles.button} onPress={() => this.handleLogin()}>
+                    <Text style={styles.buttonText}>Iniciar sesión</Text>
                 </TouchableOpacity>
 
-                {this.state.errorMessage
-                    ?
-                    (
-                        <Text style={styles.errorText}>{this.state.errorMessage}</Text>
-                    )
-                    : null}
+                {this.state.errorMessage ?
+                    <Text style={styles.errorText}>{this.state.errorMessage}</Text>
+                    : null
+                }
 
-                <TouchableOpacity style={styles.loginButton} onPress={() => this.irARegister()}>
-                    <Text >No tengo cuenta, necesito registrarme</Text>
+                <TouchableOpacity style={styles.registerLink} onPress={() => this.irARegister()}>
+                    <Text style={styles.registerText}>¿No tienes cuenta? Regístrate aquí</Text>
                 </TouchableOpacity>
             </View>
         );
@@ -87,30 +83,52 @@ export default class Login extends Component {
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
+        justifyContent: 'center',
         padding: 20,
+        backgroundColor: '#F9F9F9',
     },
     title: {
-        fontSize: 24,
-        marginBottom: 20,
+        fontSize: 30,
+        fontWeight: 'bold',
+        color: '#333',
+        marginBottom: 30,
+        textAlign: 'center',
     },
     input: {
         width: '100%',
+        padding: 15,
+        marginBottom: 15,
         borderWidth: 1,
-        borderColor: 'gray',
-        marginBottom: 10,
+        borderRadius: 10,
+        borderColor: '#ddd',
+        backgroundColor: '#fff',
+        fontSize: 16,
+        color: '#333',
     },
-    loginButton: {
-        width: '100%',
+    button: {
+        backgroundColor: '#4CAF50',
+        padding: 15,
+        borderRadius: 10,
         alignItems: 'center',
-        marginTop: 10,
-        fontSize: 20,
-        textAlign: 'center',
+        marginBottom: 20,
+    },
+    buttonText: {
+        color: '#fff',
+        fontSize: 18,
+        fontWeight: 'bold',
     },
     errorText: {
         color: 'red',
-        marginTop: 10,
         textAlign: 'center',
+        marginBottom: 10,
+    },
+    registerLink: {
+        alignItems: 'center',
+        marginTop: 20,
+    },
+    registerText: {
+        fontSize: 16,
+        color: '#007BFF',
     },
 });
-
-
