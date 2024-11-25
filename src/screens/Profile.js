@@ -13,23 +13,23 @@ export default class Profile extends Component {
   }
 
   componentDidMount() {
-    db.collection('posteos').where('owner', '==', auth.currentUser.email).onSnapshot(
-      docs => {
+    db.collection('posteos')
+      .where('owner', '==', auth.currentUser.email)
+      .onSnapshot((docs) => {
         let posts = [];
-        docs.forEach(doc => {
+        docs.forEach((doc) => {
           posts.push({
             id: doc.id,
-            data: doc.data()
+            data: doc.data(),
           });
         });
         this.setState({ posteos: posts });
-      }
-    );
+      });
+
     db.collection('users')
       .where('owner', '==', auth.currentUser.email)
       .onSnapshot((docs) => {
         let arrDocs = [];
-
         docs.forEach((doc) => {
           arrDocs.push({
             id: doc.id,
@@ -37,14 +37,23 @@ export default class Profile extends Component {
           });
         });
 
-        this.setState(
-          {
-            userInfo: arrDocs,
-          },
-          () => console.log('este es el estado', this.state)
-        );
+        this.setState({
+          userInfo: arrDocs,
+        });
       });
   }
+
+  eliminarPost = (postId) => {
+    db.collection('posteos')
+      .doc(postId)
+      .delete()
+      .then(() => {
+        console.log('Publicación eliminada correctamente.');
+      })
+      .catch((error) => {
+        console.error('Error al eliminar la publicación:', error);
+      });
+  };
 
   logout = () => {
     auth.signOut()
@@ -52,7 +61,7 @@ export default class Profile extends Component {
         this.props.navigation.navigate('Login');
       })
       .catch((error) => {
-        console.log("Error al cerrar sesión:", error);
+        console.error('Error al cerrar sesión:', error);
       });
   };
 
@@ -84,19 +93,22 @@ export default class Profile extends Component {
               renderItem={({ item }) => (
                 <View style={styles.postContainer}>
                   <Post navigation={this.props.navigation} posteo={item} />
+                  <TouchableOpacity
+                    style={styles.deleteButton}
+                    onPress={() => this.eliminarPost(item.id)}
+                  >
+                    <Text style={styles.deleteButtonText}>Eliminar</Text>
+                  </TouchableOpacity>
                 </View>
               )}
             />
           </>
         )}
 
-
         <TouchableOpacity style={styles.logoutButton} onPress={this.logout}>
           <Text style={styles.logoutButtonText}>Cerrar sesión</Text>
         </TouchableOpacity>
       </View>
-
-
     );
   }
 }
@@ -147,9 +159,18 @@ const styles = StyleSheet.create({
     padding: 15,
     marginBottom: 15,
   },
-  postText: {
-    fontSize: 16,
-    color: '#444',
+  deleteButton: {
+    backgroundColor: '#FF6B6B',
+    padding: 14,
+    borderRadius: 20,
+    width: 83,
+    marginLeft: 22,
+    marginBottom: 21,
+  },
+  deleteButtonText: {
+    color: '#fff',
+    fontWeight: '600',
+    fontSize: 14,
   },
   logoutButton: {
     backgroundColor: '#FF6B6B',

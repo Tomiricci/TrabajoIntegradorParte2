@@ -8,13 +8,12 @@ export default class FormularioRegister extends Component {
         this.state = {
             email: '',
             username: '',
-            bio: '',
             password: '',
             error: ''
         }
     }
 
-    submit(email, username, bio, password) {
+    submit(email, username, password) {
         if (!email.includes('@')) {
             this.setState({ error: 'Ingrese un formato de email valido' })
             return
@@ -22,11 +21,6 @@ export default class FormularioRegister extends Component {
 
         if (username.length < 2) {
             this.setState({ error: 'Ingrese un username' })
-            return
-        }
-
-        if (bio.length < 2) {
-            this.setState({ error: 'Ingrese una bio' })
             return
         }
 
@@ -75,13 +69,6 @@ export default class FormularioRegister extends Component {
                     value={this.state.username}
                 />
                 <TextInput
-                    style={styles.input}
-                    placeholder='Ingrese su bio'
-                    keyboardType='default'
-                    onChangeText={(text) => this.setState({ bio: text, error: '' })}
-                    value={this.state.bio}
-                />
-                <TextInput
                     value={this.state.password}
                     style={styles.input}
                     placeholder='Ingrese su password'
@@ -124,6 +111,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         fontSize: 16,
         color: '#333',
+        textAlign: 'center',
     },
     errorText: {
         color: 'red',

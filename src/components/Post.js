@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, Image, FlatList, StyleSheet } from 'react-native';
+import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome'; // Importa la librería de íconos
 import firebase from 'firebase';
 import { db, auth } from '../firebase/config';
 
@@ -18,7 +19,7 @@ export default class Post extends Component {
       .doc(this.props.posteo.id)
       .update({ likes: firebase.firestore.FieldValue.arrayUnion(auth.currentUser.email) })
       .then(() => {
-        this.setState({ likes: this.props.posteo.data.likes.length, likeado: true });
+        this.setState({ likes: this.state.likes + 1, likeado: true });
       });
   }
 
@@ -27,7 +28,7 @@ export default class Post extends Component {
       .doc(this.props.posteo.id)
       .update({ likes: firebase.firestore.FieldValue.arrayRemove(auth.currentUser.email) })
       .then(() => {
-        this.setState({ likes: this.props.posteo.data.likes.length, likeado: false });
+        this.setState({ likes: this.state.likes - 1, likeado: false });
       });
   }
 
@@ -41,15 +42,16 @@ export default class Post extends Component {
         <Text style={styles.likes}>Likes: {this.state.likes}</Text>
 
         <View style={styles.likeButtonContainer}>
-          {this.state.likeado ? (
-            <TouchableOpacity style={styles.button} onPress={() => this.Deslikear()}>
-              <Text style={styles.buttonText}>Deslikear</Text>
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity style={styles.button} onPress={() => this.Likear()}>
-              <Text style={styles.buttonText}>Likear</Text>
-            </TouchableOpacity>
-          )}
+          <TouchableOpacity
+            onPress={() => (this.state.likeado ? this.Deslikear() : this.Likear())}
+            style={styles.likeButton}
+          >
+            <Icon
+              name={this.state.likeado ? 'heart' : 'heart-o'} // Ícono relleno o vacío. Lo buscamos para que nos quede mas estetica la pagina
+              size={24}
+              color={this.state.likeado ? '#FF6B6B' : '#888'}
+            />
+          </TouchableOpacity>
         </View>
       </View>
     );
@@ -80,16 +82,10 @@ const styles = StyleSheet.create({
   },
   likeButtonContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
     marginTop: 10,
   },
-  button: {
-    backgroundColor: '#FF6B6B',
-    padding: 14,
-    borderRadius: 20,
-  },
-  buttonText: {
-    color: '#fff',
-    fontWeight: 'bold',
+  likeButton: {
+    padding: 8,
   },
 });
