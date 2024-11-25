@@ -75,9 +75,6 @@ export default class Profile extends Component {
           )}
         </View>
 
-
-
-
         {this.state.posteos.length > 0 && (
           <>
             <Text style={styles.postListTitle}>Tus Posteos</Text>
@@ -149,7 +146,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 15,
     marginBottom: 15,
-
   },
   postText: {
     fontSize: 16,
