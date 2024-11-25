@@ -46,7 +46,7 @@ export default class Buscador extends Component {
           value={this.state.busqueda}
           onChangeText={(text) => this.setState({ busqueda: text })}
         />
-        
+
         {resultadosFiltrados.length === 0 ? (
           <Text style={styles.noResultsText}>No hay resultados para su búsqueda</Text>
         ) : (
@@ -81,7 +81,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 20,
     color: '#333',
-    placeholderTextColor: '#888',
   },
   noResultsText: {
     fontSize: 16,

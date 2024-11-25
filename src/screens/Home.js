@@ -60,10 +60,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     marginBottom: 15,
     padding: 15,
-    borderRadius: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
+    borderRadius: 10
   },
 });

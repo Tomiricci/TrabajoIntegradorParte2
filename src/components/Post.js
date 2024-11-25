@@ -63,11 +63,6 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     marginHorizontal: 20,
     borderRadius: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 5, // Shadow for Android
   },
   username: {
     fontSize: 16,
@@ -90,8 +85,7 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: '#FF6B6B',
-    paddingVertical: 8,
-    paddingHorizontal: 20,
+    padding: 14,
     borderRadius: 20,
   },
   buttonText: {

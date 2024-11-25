@@ -8,7 +8,7 @@ export default class Login extends Component {
         this.state = {
             gmail: "",
             password: "",
-            errorMessage: ""  // Estado para almacenar el mensaje de error
+            errorMessage: ""
         };
     }
 

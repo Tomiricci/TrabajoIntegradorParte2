@@ -4,11 +4,11 @@ import { db, auth } from '../firebase/config';
 import FormularioRegister from '../components/FormularioRegister'
 
 export default class Register extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
     }
 
-    irAlLogin(){
+    irAlLogin() {
         this.props.navigation.navigate('login')
     }
 
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#f2f2f2', // Fondo claro
+        backgroundColor: '#f2f2f2',
         padding: 20,
     },
     title: {
@@ -64,16 +64,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         fontSize: 16,
         color: '#333',
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 5,
+
     },
     loginLink: {
         marginTop: 20,
         paddingVertical: 12,
         width: '100%',
-        backgroundColor: '#007BFF', // Botón azul
+        backgroundColor: '#007BFF',
         borderRadius: 10,
         alignItems: 'center',
     },

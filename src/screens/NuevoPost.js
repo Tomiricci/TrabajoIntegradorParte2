@@ -42,8 +42,6 @@ export default class NuevoPost extends Component {
           value={this.state.descripcion}
           onChangeText={(text) => this.setState({ descripcion: text })}
           placeholder="Descripción"
-          multiline
-          numberOfLines={4}
           style={styles.textInput}
         />
 
@@ -78,12 +76,11 @@ const styles = StyleSheet.create({
     borderColor: '#ddd',
     fontSize: 16,
     marginBottom: 20,
-    textAlignVertical: 'top',
+
   },
   submitButton: {
     backgroundColor: '#FF6B6B',
-    paddingVertical: 12,
-    paddingHorizontal: 30,
+    padding: 15,
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',

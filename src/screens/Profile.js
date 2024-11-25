@@ -8,28 +8,28 @@ export default class Profile extends Component {
     super(props);
     this.state = {
       userInfo: [],
-      posteos:[]
+      posteos: []
     };
   }
 
   componentDidMount() {
     db.collection('posteos').where('owner', '==', auth.currentUser.email).onSnapshot(
       docs => {
-          let posts = [];
-          docs.forEach(doc => {
-              posts.push({
-                  id: doc.id,
-                  data: doc.data()
-              });
+        let posts = [];
+        docs.forEach(doc => {
+          posts.push({
+            id: doc.id,
+            data: doc.data()
           });
-          this.setState({ posteos: posts });
+        });
+        this.setState({ posteos: posts });
       }
-  );
+    );
     db.collection('users')
       .where('owner', '==', auth.currentUser.email)
       .onSnapshot((docs) => {
         let arrDocs = [];
-        
+
         docs.forEach((doc) => {
           arrDocs.push({
             id: doc.id,
@@ -59,42 +59,45 @@ export default class Profile extends Component {
   render() {
     return (
       <View style={styles.container}>
-  <View style={styles.profileCard}>
-    {this.state.userInfo.length > 0 && (
-      <>
-        <Text style={styles.welcomeText}>
-          Hola, {this.state.userInfo[0].data.username} 👋
-        </Text>
-        <Text style={styles.emailText}>
-          {this.state.userInfo[0].data.owner}
-        </Text>
-        <Text style={styles.postCountText}>
-          Posteos: {this.state.posteos.length}
-        </Text>
-      </>
-    )}
-  </View>
+        <View style={styles.profileCard}>
+          {this.state.userInfo.length > 0 && (
+            <>
+              <Text style={styles.welcomeText}>
+                Hola, {this.state.userInfo[0].data.username} 👋
+              </Text>
+              <Text style={styles.emailText}>
+                {this.state.userInfo[0].data.owner}
+              </Text>
+              <Text style={styles.postCountText}>
+                Posteos: {this.state.posteos.length}
+              </Text>
+            </>
+          )}
+        </View>
 
-  {this.state.posteos.length > 0 && (
-    <>
-      <Text style={styles.postListTitle}>Tus Posteos</Text>
-      <FlatList
-        data={this.state.posteos}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <View style={styles.postContainer}>
-            <Post navigation={this.props.navigation} posteo={item} />
-          </View>
+
+
+
+        {this.state.posteos.length > 0 && (
+          <>
+            <Text style={styles.postListTitle}>Tus Posteos</Text>
+            <FlatList
+              data={this.state.posteos}
+              keyExtractor={(item) => item.id.toString()}
+              renderItem={({ item }) => (
+                <View style={styles.postContainer}>
+                  <Post navigation={this.props.navigation} posteo={item} />
+                </View>
+              )}
+            />
+          </>
         )}
-      />
-    </>
-  )}
 
-  {/* Botón de Cerrar Sesión */}
-  <TouchableOpacity style={styles.logoutButton} onPress={this.logout}>
-    <Text style={styles.logoutButtonText}>Cerrar sesión</Text>
-  </TouchableOpacity>
-</View>
+
+        <TouchableOpacity style={styles.logoutButton} onPress={this.logout}>
+          <Text style={styles.logoutButtonText}>Cerrar sesión</Text>
+        </TouchableOpacity>
+      </View>
 
 
     );
@@ -104,7 +107,7 @@ export default class Profile extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f7f8fa', // Fondo general suave
+    backgroundColor: '#f7f8fa',
     padding: 20,
     alignItems: 'center',
   },
@@ -114,11 +117,6 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     padding: 20,
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.1,
-    shadowRadius: 6,
-    elevation: 5,
     marginBottom: 20,
   },
   welcomeText: {
@@ -136,7 +134,7 @@ const styles = StyleSheet.create({
   postCountText: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#007AFF', // Azul moderno
+    color: '#007AFF',
     marginBottom: 10,
   },
   postListTitle: {
@@ -151,11 +149,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 15,
     marginBottom: 15,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+
   },
   postText: {
     fontSize: 16,
